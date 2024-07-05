@@ -1,0 +1,51 @@
+import asyncio
+import websockets
+import RPi.GPIO as GPIO
+
+# Daftar pin GPIO yang ingin dimonitor
+pins_to_monitor = [29, 31, 26, 24, 21, 19, 23, 32, 33, 13, 22, 36, 11, 12, 35, 38, 40, 15, 1]
+
+# Inisialisasi GPIO
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(buttonArray[0], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(buttonArray[1], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+IO.setup(buttonArray[2], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[3], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[4], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[5], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[6], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[7], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[8], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[9], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[10], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[11], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[12], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[13], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[14], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[15], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[16], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.setup(buttonArray[17], GPIO.IN, pull_up_down=GPIO.PUD_UP)	
+async def send_sensor_data(websocket, path):
+    print("WebSocket server started")
+    try:
+        while True:
+            # Membaca nilai input dari setiap pin GPIO yang dimonitor
+            sensor_data = {f"GPIO_{pin}": GPIO.input(pin) for pin in pins_to_monitor}
+
+            # Mengirim data ke klien WebSocket
+            await websocket.send(sensor_data)
+
+            # Menunggu sebelum membaca kembali nilai input
+            await asyncio.sleep(0.1)
+
+    except websockets.exceptions.ConnectionClosedOK:
+        print("WebSocket connection closed")
+
+async def main():
+    async with websockets.serve(send_sensor_data, 'localhost', 8765):
+        await asyncio.Future()  # Tunggu hingga server WebSocket ditutup
+
+if __name__ == "__main__":
+    asyncio.run(main())
+

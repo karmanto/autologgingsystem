@@ -1,3 +1,5 @@
 mysqlclient
-RPi.GPIO
 python-dotenv
+RPi.GPIO
+websockets
+
