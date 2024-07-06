@@ -40,17 +40,17 @@ def init_rpi_gpio():
 
     for INPUT in RPI_INPUT_ARRAY:
         INPUT.direction = digitalio.Direction.INPUT
-        INPUT.pull = digitalio.Pull.DOWN
+        INPUT.pull = digitalio.Pull.UP
 
 def init_mcp(ADDR):
     try:
         MCP = MCP23017(_I2C_PIN, address=ADDR)
         PINS = [MCP.get_pin(i) for i in range(16)]
-        
+
         for PIN in PINS:
             PIN.direction = digitalio.Direction.INPUT
-            PIN.pull = digitalio.Pull.DOWN
-        
+            PIN.pull = digitalio.Pull.UP
+
         return True, PINS
 
     except:
