@@ -49,7 +49,7 @@ def init_mcp(ADDR):
         
         for PIN in PINS:
             PIN.direction = digitalio.Direction.INPUT
-            PIN.pull = digitalio.Pull.UP
+            PIN.pull = digitalio.Pull.DOWN
         
         return True, PINS
 
