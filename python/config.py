@@ -34,6 +34,7 @@ def get_db_connection():
 def init_rpi_gpio():
     for OUTPUT in RPI_OUTPUT_ARRAY:
         OUTPUT.direction = digitalio.Direction.OUTPUT
+        OUTPUT.value = True
 
     for INPUT in RPI_INPUT_ARRAY:
         INPUT.direction = digitalio.Direction.INPUT
