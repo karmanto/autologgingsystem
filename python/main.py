@@ -2,29 +2,37 @@ import config
 import time 
 from time import sleep
 
-#config.init_rpi_gpio()
-#MCP1_INIT, MCP1_PINS = config.init_mcp(0x20)
-#MCP2_INIT, MCP2_PINS = config.init_mcp(0x21)
-#MCP3_INIT, MCP3_PINS = config.init_mcp(0x22)
+config.init_rpi_gpio()
+MCP1_INIT, MCP1_PINS = config.init_mcp(0x20)
+MCP2_INIT, MCP2_PINS = config.init_mcp(0x21)
+MCP3_INIT, MCP3_PINS = config.init_mcp(0x22)
+DB_INIT, DB = get_db_connection()
 
-#while True:
-#    time.sleep(.5)
-#    config.RPI_OUTPUT_ARRAY[1].value = True
-#    time.sleep(.5)
-#    config.RPI_OUTPUT_ARRAY[1].value = False
-#    input_values = [INPUT_PIN.value for INPUT_PIN in config.RPI_INPUT_ARRAY]
-#    print(f"\rInput pin values: {input_values}", end='', flush=True)
-#    time.sleep(1)
-#    if MCP1_INIT :
-#        MCP_VALUES = [PIN.value for PIN in MCP1_PINS] 
-#        print(f"\rMCP pin values: {MCP_VALUES}", end='', flush=True)
+while True:
+   time.sleep(1)
+   INPUTS = [False] * 64
+   config.RPI_OUTPUT_ARRAY[0].value = not config.RPI_OUTPUT_ARRAY[0].value
+   for index, INPUT_PIN in enumerate(config.RPI_INPUT_ARRAY):
+    INPUTS[index] = INPUT_PIN.value
+    
+    if MCP1_INIT :
+        for index, INPUT_PIN in enumerate(MCP1_PINS):
+            INPUTS[index + 18] = INPUT_PIN.value
 
-#    time.sleep(1)
+    if MCP2_INIT :
+        for index, INPUT_PIN in enumerate(MCP2_PINS):
+            INPUTS[index + 18 + 16] = INPUT_PIN.value
 
-db = config.get_db_connection()
-cursor = db.cursor()
-cursor.execute("SELECT VERSION()")
-result = cursor.fetchone()
-print(f"Database version: {result[0]}")
-cursor.close()
-db.close()
+    if MCP3_INIT :
+        for index, INPUT_PIN in enumerate(MCP3_PINS):
+            INPUTS[index + 18 + 16 + 16] = INPUT_PIN.value
+    
+    print(f"\rInput pin values: {INPUTS}", end='', flush=True)
+
+    #db = config.get_db_connection()
+    #cursor = db.cursor()
+    #cursor.execute("SELECT VERSION()")
+    #result = cursor.fetchone()
+    #print(f"Database version: {result[0]}")
+    #cursor.close()
+    #db.close()

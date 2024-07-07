@@ -26,12 +26,16 @@ RPI_OUTPUT_ARRAY = [digitalio.DigitalInOut(pin) for pin in [_OUT1, _OUT2, _OUT3]
 RPI_INPUT_ARRAY = [digitalio.DigitalInOut(pin) for pin in _RPI_PIN_ARRAY]
 
 def get_db_connection():
-    return MySQLdb.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        passwd=os.getenv("DB_PASSWORD"),
-        db=os.getenv("DB_NAME")
-    )
+    try:
+        db = MySQLdb.connect(
+                host=os.getenv("DB_HOST"),
+                user=os.getenv("DB_USER"),
+                passwd=os.getenv("DB_PASSWORD"),
+                db=os.getenv("DB_NAME")
+            )
+        return True, db
+    except:
+        return False, None
 
 def init_rpi_gpio():
     for OUTPUT in RPI_OUTPUT_ARRAY:
