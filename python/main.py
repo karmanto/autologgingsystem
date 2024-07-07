@@ -6,11 +6,11 @@ config.init_rpi_gpio()
 MCP1_INIT, MCP1_PINS = config.init_mcp(0x20)
 MCP2_INIT, MCP2_PINS = config.init_mcp(0x21)
 MCP3_INIT, MCP3_PINS = config.init_mcp(0x22)
-DB_INIT, DB = get_db_connection()
+DB_INIT, DB = config.get_db_connection()
 
 while True:
    time.sleep(1)
-   INPUTS = [False] * 64
+   INPUTS = [True] * 66
    config.RPI_OUTPUT_ARRAY[0].value = not config.RPI_OUTPUT_ARRAY[0].value
    for index, INPUT_PIN in enumerate(config.RPI_INPUT_ARRAY):
     INPUTS[index] = INPUT_PIN.value
