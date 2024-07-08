@@ -80,6 +80,8 @@ class CreateDataMonitor extends Migration
             $table->boolean('spr43')->nullable();
             $table->boolean('spr44')->nullable();
             $table->boolean('spr45')->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
