@@ -34,7 +34,7 @@ while True:
         for index, INPUT_PIN in enumerate(MCP3_PINS):
             INPUTS[index + 18 + 16 + 16] = not INPUT_PIN.value
 
-    cur.execute	(	"INSERT INTO data_monitor (" + config.FIELD_STRING + ") " +
+    CURSOR.execute	(	"INSERT INTO data_monitor (" + config.FIELD_STRING + ") " +
 					"VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
                     (
                     INPUTS[0], INPUTS[1], INPUTS[2], INPUTS[3], INPUTS[4], INPUTS[5], INPUTS[6], INPUTS[7], INPUTS[8], INPUTS[9], 
@@ -46,4 +46,4 @@ while True:
                     INPUTS[60], INPUTS[61], INPUTS[62], INPUTS[63]
                     )
                 )
-    db.commit()	
+    DB.commit()	
