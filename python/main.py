@@ -105,10 +105,11 @@ while True:
             json.dump(monitor_data, monitor_file, indent=4)
 
     except FileNotFoundError:
-        print("File 'monitor.json' not found.")
-    except json.JSONDecodeError:
-        print("Error decoding 'monitor.json'.")
-    except IndexError:
-        print("Index error: list index out of range.")
+        monitor_data = {
+            "ack_stat": True,
+            "monitor_list": [{"name": name, "stat": False} for name in config.FIELD_STRING.split(",")]
+        }
+        with open('monitor.json', 'w') as monitor_file:
+            json.dump(monitor_data, monitor_file, indent=4)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        pass
