@@ -1,0 +1,261 @@
+{
+    "ack_stat": true,
+    "monitor_list": [
+        {
+            "name": "cbc1",
+            "stat": false
+        },
+        {
+            "name": "cbc2",
+            "stat": true
+        },
+        {
+            "name": "prs1",
+            "stat": true
+        },
+        {
+            "name": "prs2",
+            "stat": false
+        },
+        {
+            "name": "prs3",
+            "stat": true
+        },
+        {
+            "name": "prs4",
+            "stat": true
+        },
+        {
+            "name": "prs5",
+            "stat": false
+        },
+        {
+            "name": "prs6",
+            "stat": false
+        },
+        {
+            "name": "prs7",
+            "stat": false
+        },
+        {
+            "name": "prs8",
+            "stat": false
+        },
+        {
+            "name": "dtr1",
+            "stat": true
+        },
+        {
+            "name": "dtr2",
+            "stat": false
+        },
+        {
+            "name": "dtr3",
+            "stat": true
+        },
+        {
+            "name": "dtr4",
+            "stat": false
+        },
+        {
+            "name": "dtr5",
+            "stat": false
+        },
+        {
+            "name": "dtr6",
+            "stat": false
+        },
+        {
+            "name": "dtr7",
+            "stat": true
+        },
+        {
+            "name": "dtr8",
+            "stat": false
+        },
+        {
+            "name": "spr0",
+            "stat": true
+        },
+        {
+            "name": "spr1",
+            "stat": false
+        },
+        {
+            "name": "spr2",
+            "stat": false
+        },
+        {
+            "name": "spr3",
+            "stat": false
+        },
+        {
+            "name": "spr4",
+            "stat": false
+        },
+        {
+            "name": "spr5",
+            "stat": false
+        },
+        {
+            "name": "spr6",
+            "stat": true
+        },
+        {
+            "name": "spr7",
+            "stat": false
+        },
+        {
+            "name": "spr8",
+            "stat": true
+        },
+        {
+            "name": "spr9",
+            "stat": true
+        },
+        {
+            "name": "spr10",
+            "stat": false
+        },
+        {
+            "name": "spr11",
+            "stat": true
+        },
+        {
+            "name": "spr12",
+            "stat": false
+        },
+        {
+            "name": "spr13",
+            "stat": true
+        },
+        {
+            "name": "spr14",
+            "stat": false
+        },
+        {
+            "name": "spr15",
+            "stat": false
+        },
+        {
+            "name": "spr16",
+            "stat": false
+        },
+        {
+            "name": "spr17",
+            "stat": false
+        },
+        {
+            "name": "spr18",
+            "stat": false
+        },
+        {
+            "name": "spr19",
+            "stat": false
+        },
+        {
+            "name": "spr20",
+            "stat": false
+        },
+        {
+            "name": "spr21",
+            "stat": false
+        },
+        {
+            "name": "spr22",
+            "stat": true
+        },
+        {
+            "name": "spr23",
+            "stat": false
+        },
+        {
+            "name": "spr24",
+            "stat": false
+        },
+        {
+            "name": "spr25",
+            "stat": true
+        },
+        {
+            "name": "spr26",
+            "stat": true
+        },
+        {
+            "name": "spr27",
+            "stat": false
+        },
+        {
+            "name": "spr28",
+            "stat": true
+        },
+        {
+            "name": "spr29",
+            "stat": false
+        },
+        {
+            "name": "spr30",
+            "stat": true
+        },
+        {
+            "name": "spr31",
+            "stat": true
+        },
+        {
+            "name": "spr32",
+            "stat": true
+        },
+        {
+            "name": "spr33",
+            "stat": false
+        },
+        {
+            "name": "spr34",
+            "stat": true
+        },
+        {
+            "name": "spr35",
+            "stat": true
+        },
+        {
+            "name": "spr36",
+            "stat": false
+        },
+        {
+            "name": "spr37",
+            "stat": false
+        },
+        {
+            "name": "spr38",
+            "stat": false
+        },
+        {
+            "name": "spr39",
+            "stat": false
+        },
+        {
+            "name": "spr40",
+            "stat": true
+        },
+        {
+            "name": "spr41",
+            "stat": false
+        },
+        {
+            "name": "spr42",
+            "stat": false
+        },
+        {
+            "name": "spr43",
+            "stat": true
+        },
+        {
+            "name": "spr44",
+            "stat": false
+        },
+        {
+            "name": "spr45",
+            "stat": false
+        }
+    ]
+}

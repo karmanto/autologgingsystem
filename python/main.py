@@ -1,6 +1,7 @@
-import config
+import fake_config as config
 import time 
 from time import sleep
+import json
 
 config.init_rpi_gpio()
 MCP1_INIT, MCP1_PINS = config.init_mcp(0x20)
@@ -14,20 +15,37 @@ while not DB_INIT:
     DB_INIT, DB = config.get_db_connection()
 
 CURSOR = DB.cursor()
-TIME_INPUTS = [time.time()] * 66
+TIME_DELAY_INPUTS = [time.time()] * 66
+RUNSECOND_INPUTS = [0] * 66
+TIMEON_INPUTS = [0] * 66
+
+CURSOR.execute ("SELECT * FROM data_runtime ORDER BY id DESC LIMIT 1")
+ROW_RUNTIME = CURSOR.fetchone()
+if ROW_RUNTIME:
+    for index, runsecond in enumerate(ROW_RUNTIME):
+        if index == 2:
+            RUNSECOND_INPUTS[index - 2] = runsecond
 
 def update_inputs(MCP_INIT, MCP_PINS, addNumber):
     if MCP_INIT:
         current_time = time.time()
         for index, INPUT_PIN in enumerate(MCP_PINS):
             if INPUT_PIN.value == False:
-                if current_time - TIME_INPUTS[index + addNumber] < 5:
+                if current_time - TIME_DELAY_INPUTS[index + addNumber] < 5:
                     continue
                 else:
                     INPUTS[index + addNumber] = 1
+                    if TIMEON_INPUTS[index + addNumber] != 0:
+                        RUNSECOND_INPUTS[index + addNumber] += current_time - TIMEON_INPUTS[index + addNumber]
+
+                    TIMEON_INPUTS[index + addNumber] = current_time
             else:
                 INPUTS[index + addNumber] = 0
-                TIME_INPUTS[index + addNumber] = current_time
+                TIME_DELAY_INPUTS[index + addNumber] = current_time
+                if TIMEON_INPUTS[index + addNumber] != 0:
+                    RUNSECOND_INPUTS[index + addNumber] += current_time - TIMEON_INPUTS[index + addNumber]
+
+                TIMEON_INPUTS[index + addNumber] = 0
 
 while True:
     time.sleep(1)
@@ -51,3 +69,46 @@ while True:
                     )
                 )
     DB.commit()
+
+    CURSOR.execute	(	"UPDATE data_runtime SET cbc1=(%s), cbc2=(%s), prs1=(%s), prs2=(%s), prs3=(%s), prs4=(%s), prs5=(%s), prs6=(%s), prs7=(%s), prs8=(%s), dtr1=(%s), dtr2=(%s), dtr3=(%s), dtr4=(%s), dtr5=(%s), dtr6=(%s), dtr7=(%s), dtr8=(%s), " +
+						"spr0=(%s), spr1=(%s), spr2=(%s), spr3=(%s), spr4=(%s), spr5=(%s), spr6=(%s), spr7=(%s), spr8=(%s), spr9=(%s), " +
+						"spr10=(%s), spr11=(%s), spr12=(%s), spr13=(%s), spr14=(%s), spr15=(%s), spr16=(%s), spr17=(%s), " +
+						"spr18=(%s), spr19=(%s), spr20=(%s), spr21=(%s), spr22=(%s), spr23=(%s), spr24=(%s), spr25=(%s), " +
+						"spr26=(%s), spr27=(%s), spr28=(%s), spr29=(%s), spr30=(%s), spr31=(%s), spr32=(%s), spr33=(%s), " +
+						"spr34=(%s), spr35=(%s), spr36=(%s), spr37=(%s), spr38=(%s), spr39=(%s), spr40=(%s), spr41=(%s), " +
+						"spr42=(%s), spr43=(%s), spr44=(%s), spr45=(%s) WHERE id=1", 
+					(
+                    RUNSECOND_INPUTS[0], RUNSECOND_INPUTS[1], RUNSECOND_INPUTS[2], RUNSECOND_INPUTS[3], RUNSECOND_INPUTS[4], RUNSECOND_INPUTS[5], RUNSECOND_INPUTS[6], RUNSECOND_INPUTS[7], RUNSECOND_INPUTS[8], RUNSECOND_INPUTS[9],
+                    RUNSECOND_INPUTS[10], RUNSECOND_INPUTS[11], RUNSECOND_INPUTS[12], RUNSECOND_INPUTS[13], RUNSECOND_INPUTS[14], RUNSECOND_INPUTS[15], RUNSECOND_INPUTS[16], RUNSECOND_INPUTS[17], RUNSECOND_INPUTS[18], RUNSECOND_INPUTS[19],
+                    RUNSECOND_INPUTS[20], RUNSECOND_INPUTS[21], RUNSECOND_INPUTS[22], RUNSECOND_INPUTS[23], RUNSECOND_INPUTS[24], RUNSECOND_INPUTS[25], RUNSECOND_INPUTS[26], RUNSECOND_INPUTS[27], RUNSECOND_INPUTS[28], RUNSECOND_INPUTS[29],
+                    RUNSECOND_INPUTS[30], RUNSECOND_INPUTS[31], RUNSECOND_INPUTS[32], RUNSECOND_INPUTS[33], RUNSECOND_INPUTS[34], RUNSECOND_INPUTS[35], RUNSECOND_INPUTS[36], RUNSECOND_INPUTS[37], RUNSECOND_INPUTS[38], RUNSECOND_INPUTS[39],
+                    RUNSECOND_INPUTS[40], RUNSECOND_INPUTS[41], RUNSECOND_INPUTS[42], RUNSECOND_INPUTS[43], RUNSECOND_INPUTS[44], RUNSECOND_INPUTS[45], RUNSECOND_INPUTS[46], RUNSECOND_INPUTS[47], RUNSECOND_INPUTS[48], RUNSECOND_INPUTS[49],
+                    RUNSECOND_INPUTS[50], RUNSECOND_INPUTS[51], RUNSECOND_INPUTS[52], RUNSECOND_INPUTS[53], RUNSECOND_INPUTS[54], RUNSECOND_INPUTS[55], RUNSECOND_INPUTS[56], RUNSECOND_INPUTS[57], RUNSECOND_INPUTS[58], RUNSECOND_INPUTS[59],
+                    RUNSECOND_INPUTS[60], RUNSECOND_INPUTS[61], RUNSECOND_INPUTS[62], RUNSECOND_INPUTS[63]
+                    )
+                )
+    DB.commit()
+
+    try:
+        with open('monitor.json', 'r') as monitor_file:
+            monitor_data = json.load(monitor_file)
+
+        monitor_data['ack_stat'] = True
+        monitor_names = config.FIELD_STRING.split(',')
+        for idx, item in enumerate(monitor_data['monitor_list']):
+            name = item['name']
+            if name in monitor_names:
+                input_index = monitor_names.index(name)
+                item['stat'] = bool(INPUTS[input_index])
+
+        with open('monitor.json', 'w') as monitor_file:
+            json.dump(monitor_data, monitor_file, indent=4)
+
+    except FileNotFoundError:
+        print("File 'monitor.json' not found.")
+    except json.JSONDecodeError:
+        print("Error decoding 'monitor.json'.")
+    except IndexError:
+        print("Index error: list index out of range.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
