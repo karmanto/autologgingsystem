@@ -16,7 +16,6 @@ class CreateDataMonitor extends Migration
         Schema::create('data_monitor', function (Blueprint $table) {
             $table->id();
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->boolean('cbc1')->nullable();
             $table->boolean('cbc2')->nullable();
             $table->boolean('prs1')->nullable();

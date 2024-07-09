@@ -16,16 +16,24 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
 
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended('home');
+        if ($user) {
+            if (Auth::attempt($credentials, $request->filled('remember'))) {
+                $request->session()->regenerate();
+                return redirect()->intended('home');
+            }
+
+            return back()->withErrors([
+                'password' => 'Password salah.',
+            ])->onlyInput('email');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email tidak terdaftar.',
         ])->onlyInput('email');
     }
+
 
     public function logout(Request $request)
     {

@@ -14,25 +14,29 @@ while not DB_INIT:
     DB_INIT, DB = config.get_db_connection()
 
 CURSOR = DB.cursor()
+TIME_INPUTS = [time.time()] * 66
+
+def update_inputs(MCP_INIT, MCP_PINS, addNumber):
+    if MCP_INIT:
+        current_time = time.time()
+        for index, INPUT_PIN in enumerate(MCP_PINS):
+            if INPUT_PIN.value == False:
+                if current_time - TIME_INPUTS[index + addNumber] < 5:
+                    continue
+                else:
+                    INPUTS[index + addNumber] = 1
+            else:
+                INPUTS[index + addNumber] = 0
+                TIME_INPUTS[index + addNumber] = current_time
 
 while True:
     time.sleep(1)
     INPUTS = [False] * 66
     config.RPI_OUTPUT_ARRAY[0].value = not config.RPI_OUTPUT_ARRAY[0].value
-    for index, INPUT_PIN in enumerate(config.RPI_INPUT_ARRAY):
-        INPUTS[index] = 0 if INPUT_PIN.value == True else 1
-
-    if MCP1_INIT:
-        for index, INPUT_PIN in enumerate(MCP1_PINS):
-            INPUTS[index + 18] = 0 if INPUT_PIN.value == True else 1
-
-    if MCP2_INIT:
-        for index, INPUT_PIN in enumerate(MCP2_PINS):
-            INPUTS[index + 18 + 16] = 0 if INPUT_PIN.value == True else 1
-
-    if MCP3_INIT:
-        for index, INPUT_PIN in enumerate(MCP3_PINS):
-            INPUTS[index + 18 + 16 + 16] = 0 if INPUT_PIN.value == True else 1
+    update_inputs(True, config.RPI_INPUT_ARRAY, 0)
+    update_inputs(MCP1_INIT, MCP1_PINS, 18)
+    update_inputs(MCP2_INIT, MCP2_PINS, 34)
+    update_inputs(MCP3_INIT, MCP3_PINS, 50)
 
     CURSOR.execute	(	"INSERT INTO data_monitor (" + config.FIELD_STRING + ") " +
 					"VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
