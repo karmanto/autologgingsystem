@@ -31,7 +31,7 @@ def update_inputs(MCP_INIT, MCP_PINS, addNumber):
 
 while True:
     time.sleep(1)
-    INPUTS = [False] * 66
+    INPUTS = [0] * 66
     config.RPI_OUTPUT_ARRAY[0].value = not config.RPI_OUTPUT_ARRAY[0].value
     update_inputs(True, config.RPI_INPUT_ARRAY, 0)
     update_inputs(MCP1_INIT, MCP1_PINS, 18)
