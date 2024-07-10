@@ -1,8 +1,16 @@
-import fake_config as config
 import time 
 from time import sleep
 import json
 import datetime
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+if os.getenv('FAKE_CONFIG', 'false').lower() == 'true':
+    import fake_config as config
+else:
+    import config
 
 config.init_rpi_gpio()
 MCP1_INIT, MCP1_PINS = config.init_mcp(0x20)
