@@ -15,7 +15,6 @@ class CreateDataRuntime extends Migration
     {
         Schema::create('data_runtime', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('created_at')->useCurrent();
             $table->bigInteger('cbc1')->default(0);
             $table->bigInteger('cbc2')->default(0);
             $table->bigInteger('prs1')->default(0);

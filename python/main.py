@@ -2,29 +2,41 @@ import fake_config as config
 import time 
 from time import sleep
 import json
+import datetime
 
 config.init_rpi_gpio()
 MCP1_INIT, MCP1_PINS = config.init_mcp(0x20)
 MCP2_INIT, MCP2_PINS = config.init_mcp(0x21)
 MCP3_INIT, MCP3_PINS = config.init_mcp(0x22)
 config.RPI_OUTPUT_ARRAY[0].value = True
-DB_INIT, DB = config.get_db_connection()
+TIME_DELAY_INPUTS = [time.time()] * 66
+RUNSECOND_INPUTS = [0] * 66
+TIMEON_INPUTS = [0] * 66
+INPUTS = [0] * 66
 
+DB_INIT, DB = config.get_db_connection()
 while not DB_INIT:
     time.sleep(5)
     DB_INIT, DB = config.get_db_connection()
 
 CURSOR = DB.cursor()
-TIME_DELAY_INPUTS = [time.time()] * 66
-RUNSECOND_INPUTS = [0] * 66
-TIMEON_INPUTS = [0] * 66
-
-CURSOR.execute ("SELECT * FROM data_runtime ORDER BY id DESC LIMIT 1")
+CURSOR.execute ("SELECT * FROM data_monitor ORDER BY id DESC LIMIT 1")
+ROW_MONITOR = CURSOR.fetchone()
+CURSOR.execute	(	"UPDATE data_monitor SET cbc1=(%s), cbc2=(%s), prs1=(%s), prs2=(%s), prs3=(%s), prs4=(%s), prs5=(%s), prs6=(%s), prs7=(%s), prs8=(%s), dtr1=(%s), dtr2=(%s), dtr3=(%s), dtr4=(%s), dtr5=(%s), dtr6=(%s), dtr7=(%s), dtr8=(%s), " +
+                    "spr0=(%s), spr1=(%s), spr2=(%s), spr3=(%s), spr4=(%s), spr5=(%s), spr6=(%s), spr7=(%s), spr8=(%s), spr9=(%s), " +
+                    "spr10=(%s), spr11=(%s), spr12=(%s), spr13=(%s), spr14=(%s), spr15=(%s), spr16=(%s), spr17=(%s), " +
+                    "spr18=(%s), spr19=(%s), spr20=(%s), spr21=(%s), spr22=(%s), spr23=(%s), spr24=(%s), spr25=(%s), " +
+                    "spr26=(%s), spr27=(%s), spr28=(%s), spr29=(%s), spr30=(%s), spr31=(%s), spr32=(%s), spr33=(%s), " +
+                    "spr34=(%s), spr35=(%s), spr36=(%s), spr37=(%s), spr38=(%s), spr39=(%s), spr40=(%s), spr41=(%s), " +
+                    "spr42=(%s), spr43=(%s), spr44=(%s), spr45=(%s) WHERE id =(%s)", 
+                (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,ROW_MONITOR[0])
+            )
+DB.commit()
+CURSOR.execute ("SELECT * FROM data_runtime LIMIT 1")
 ROW_RUNTIME = CURSOR.fetchone()
-if ROW_RUNTIME:
-    for index, runsecond in enumerate(ROW_RUNTIME):
-        if index == 2:
-            RUNSECOND_INPUTS[index - 2] = runsecond
+for index, runsecond in enumerate(ROW_RUNTIME):
+    if index >= 2:
+        RUNSECOND_INPUTS[index - 2] = runsecond
 
 def update_inputs(MCP_INIT, MCP_PINS, addNumber):
     if MCP_INIT:
@@ -68,7 +80,6 @@ while True:
                     INPUTS[60], INPUTS[61], INPUTS[62], INPUTS[63]
                     )
                 )
-    DB.commit()
 
     CURSOR.execute	(	"UPDATE data_runtime SET cbc1=(%s), cbc2=(%s), prs1=(%s), prs2=(%s), prs3=(%s), prs4=(%s), prs5=(%s), prs6=(%s), prs7=(%s), prs8=(%s), dtr1=(%s), dtr2=(%s), dtr3=(%s), dtr4=(%s), dtr5=(%s), dtr6=(%s), dtr7=(%s), dtr8=(%s), " +
 						"spr0=(%s), spr1=(%s), spr2=(%s), spr3=(%s), spr4=(%s), spr5=(%s), spr6=(%s), spr7=(%s), spr8=(%s), spr9=(%s), " +
@@ -90,26 +101,29 @@ while True:
     DB.commit()
 
     try:
-        with open('monitor.json', 'r') as monitor_file:
+        with open('../storage/app/monitor.json', 'r') as monitor_file:
             monitor_data = json.load(monitor_file)
 
-        monitor_data['ack_stat'] = True
+        now = datetime.datetime.now()
+        monitor_data['time_updated'] = now.strftime("%d/%m/%Y %H:%M:%S")
         monitor_names = config.FIELD_STRING.split(',')
         for idx, item in enumerate(monitor_data['monitor_list']):
             name = item['name']
             if name in monitor_names:
                 input_index = monitor_names.index(name)
                 item['stat'] = bool(INPUTS[input_index])
+                item['runseconds'] = int(RUNSECOND_INPUTS[input_index])
 
-        with open('monitor.json', 'w') as monitor_file:
+        with open('../storage/app/monitor.json', 'w') as monitor_file:
             json.dump(monitor_data, monitor_file, indent=4)
 
     except FileNotFoundError:
+        now = datetime.datetime.now()
         monitor_data = {
-            "ack_stat": True,
-            "monitor_list": [{"name": name, "stat": False} for name in config.FIELD_STRING.split(",")]
+            "time_updated": now.strftime("%d/%m/%Y %H:%M:%S"),
+            "monitor_list": [{"name": name, "stat": False, "runseconds": 0} for name in config.FIELD_STRING.split(",")]
         }
-        with open('monitor.json', 'w') as monitor_file:
+        with open('../storage/app/monitor.json', 'w') as monitor_file:
             json.dump(monitor_data, monitor_file, indent=4)
     except Exception as e:
         pass
