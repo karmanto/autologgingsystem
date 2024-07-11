@@ -72,11 +72,11 @@ def update_inputs(MCP_INIT, MCP_PINS, current_time, addNumber):
 while True:
     time.sleep(.5)
     config.RPI_OUTPUT_ARRAY[0].value = not config.RPI_OUTPUT_ARRAY[0].value
-    CURR_TIME = time.time()
+    CURR_TIME = int(time.time())
     if CURR_TIME != PREV_TIME:
         PREV_TIME = CURR_TIME
         INPUTS = [0] * 66
-        update_inputs(True, config.RPI_INPUT_ARRAY, 0)
+        update_inputs(True, config.RPI_INPUT_ARRAY, CURR_TIME, 0)
         update_inputs(MCP1_INIT, MCP1_PINS, CURR_TIME, 18)
         update_inputs(MCP2_INIT, MCP2_PINS, CURR_TIME, 34)
         update_inputs(MCP3_INIT, MCP3_PINS, CURR_TIME, 50)
