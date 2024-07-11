@@ -114,7 +114,7 @@ while True:
         DB.commit()
 
         try:
-            with open('./storage/app/monitor.json', 'r') as monitor_file:
+            with open(config.JSON_PATH, 'r') as monitor_file:
                 monitor_data = json.load(monitor_file)
 
             now = datetime.datetime.now()
@@ -127,7 +127,7 @@ while True:
                     item['stat'] = bool(INPUTS[input_index])
                     item['runseconds'] = int(RUNSECOND_INPUTS[input_index])
 
-            with open('./storage/app/monitor.json', 'w') as monitor_file:
+            with open(config.JSON_PATH, 'w') as monitor_file:
                 json.dump(monitor_data, monitor_file, indent=4)
 
         except FileNotFoundError:
@@ -136,7 +136,7 @@ while True:
                 "time_updated": now.strftime("%d/%m/%Y %H:%M:%S"),
                 "monitor_list": [{"name": name, "stat": False, "runseconds": 0} for name in config.FIELD_STRING.split(",")]
             }
-            with open('./storage/app/monitor.json', 'w') as monitor_file:
+            with open(config.JSON_PATH, 'w') as monitor_file:
                 json.dump(monitor_data, monitor_file, indent=4)
         except Exception as e:
             pass
