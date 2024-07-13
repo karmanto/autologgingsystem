@@ -15,41 +15,7 @@
 	<link rel="stylesheet" href="{{ asset('contactform/css/util.css') }}">
 	<link rel="stylesheet" href="{{ asset('contactform/css/main.css') }}">
 	<link rel="stylesheet" href="{{ asset('dropdownmenu/css/style.css') }}">
-    <style>
-        .slidecontainer {
-            width: 100%;
-        }
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 15px;
-            border-radius: 5px;
-            background: #d3d3d3;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-        .slider:hover {
-            opacity: 1;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #4CAF50;
-            cursor: pointer;
-        }
-        .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #4CAF50;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 </head>
 <body>
     <div>
@@ -69,7 +35,7 @@
             </div>
             <div class="drop-down__menu-box">
                 <ul class="drop-down__menu">
-                    <li class="drop-down__item" onclick="window.location.replace('dayPrint1-html.php'+'?eraseCache=true')">Print
+                    <li class="drop-down__item" onclick="window.location.replace('print')">Print
                         <svg class="drop-down__item-icon">
                             <path d="M7.126,14.692h5.748c0.39,0,0.706-0.316,0.706-0.706c0-0.39-0.315-0.706-0.706-0.706H7.126c-0.39,0-0.706,0.316-0.706,0.706C6.42,14.376,6.736,14.692,7.126,14.692z"></path>
                             <path d="M7.126,16.899h4.641c0.39,0,0.706-0.315,0.706-0.706c0-0.389-0.316-0.706-0.706-0.706H7.126c-0.39,0-0.706,0.317-0.706,0.706C6.42,16.584,6.736,16.899,7.126,16.899z"></path>
@@ -85,12 +51,7 @@
                         <svg class="drop-down__item-icon">
                             <path d="M17.431,2.156h-3.715c-0.228,0-0.413,0.186-0.413,0.413v6.973h-2.89V6.687c0-0.229-0.186-0.413-0.413-0.413H6.285c-0.228,0-0.413,0.184-0.413,0.413v6.388H2.569c-0.227,0-0.413,0.187-0.413,0.413v3.942c0,0.228,0.186,0.413,0.413,0.413h14.862c0.228,0,0.413-0.186,0.413-0.413V2.569C17.844,2.342,17.658,2.156,17.431,2.156 M5.872,17.019h-2.89v-3.117h2.89V17.019zM9.587,17.019h-2.89V7.1h2.89V17.019z M13.303,17.019h-2.89v-6.651h2.89V17.019z M17.019,17.019h-2.891V2.982h2.891V17.019z"></path>
                         </svg>
-                    </li>
-                    <li class="drop-down__item" onclick="window.location.replace('errorLog-html.php'+'?eraseCache=true')">Error Log
-                        <svg class="drop-down__item-icon">
-                            <path d="M18.344,16.174l-7.98-12.856c-0.172-0.288-0.586-0.288-0.758,0L1.627,16.217c0.339-0.543-0.603,0.668,0.384,0.682h15.991C18.893,16.891,18.167,15.961,18.344,16.174 M2.789,16.008l7.196-11.6l7.224,11.6H2.789z M10.455,7.552v3.561c0,0.244-0.199,0.445-0.443,0.445s-0.443-0.201-0.443-0.445V7.552c0-0.245,0.199-0.445,0.443-0.445S10.455,7.307,10.455,7.552M10.012,12.439c-0.733,0-1.33,0.6-1.33,1.336s0.597,1.336,1.33,1.336c0.734,0,1.33-0.6,1.33-1.336S10.746,12.439,10.012,12.439M10.012,14.221c-0.244,0-0.443-0.199-0.443-0.445c0-0.244,0.199-0.445,0.443-0.445s0.443,0.201,0.443,0.445C10.455,14.021,10.256,14.221,10.012,14.221"></path>
-                        </svg>
-                    </li>               
+                    </li>      
                     <li class="drop-down__item" onclick="window.location.replace('/login')">Admin
                         <svg class="drop-down__item-icon">
                             <path d="M12.443,9.672c0.203-0.496,0.329-1.052,0.329-1.652c0-1.969-1.241-3.565-2.772-3.565S7.228,6.051,7.228,8.02c0,0.599,0.126,1.156,0.33,1.652c-1.379,0.555-2.31,1.553-2.31,2.704c0,1.75,2.128,3.169,4.753,3.169c2.624,0,4.753-1.419,4.753-3.169C14.753,11.225,13.821,10.227,12.443,9.672z M10,5.247c1.094,0,1.98,1.242,1.98,2.773c0,1.531-0.887,2.772-1.98,2.772S8.02,9.551,8.02,8.02C8.02,6.489,8.906,5.247,10,5.247z M10,14.753c-2.187,0-3.96-1.063-3.96-2.377c0-0.854,0.757-1.596,1.885-2.015c0.508,0.745,1.245,1.224,2.076,1.224s1.567-0.479,2.076-1.224c1.127,0.418,1.885,1.162,1.885,2.015C13.961,13.689,12.188,14.753,10,14.753z M10,0.891c-5.031,0-9.109,4.079-9.109,9.109c0,5.031,4.079,9.109,9.109,9.109c5.031,0,9.109-4.078,9.109-9.109C19.109,4.969,15.031,0.891,10,0.891z M10,18.317c-4.593,0-8.317-3.725-8.317-8.317c0-4.593,3.724-8.317,8.317-8.317c4.593,0,8.317,3.724,8.317,8.317C18.317,14.593,14.593,18.317,10,18.317z"></path>

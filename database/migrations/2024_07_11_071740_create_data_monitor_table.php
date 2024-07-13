@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataMonitor extends Migration
+class CreateDataMonitorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -90,6 +90,6 @@ class CreateDataMonitor extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_data_monitor');
+        Schema::dropIfExists('data_monitor');
     }
 }

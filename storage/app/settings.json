@@ -209,5 +209,7 @@
         { "field": "spr45", "nickname": "", "fullname": "" }
     ],
     "ngrok_link": "",
-    "datetime_conflict": false
+    "datetime_conflict": false,
+    "print_tlr": 5,
+    "print_start_hour": 7
 }

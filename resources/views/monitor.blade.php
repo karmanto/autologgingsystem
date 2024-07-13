@@ -4,8 +4,8 @@
 @section('content')
 <div class="container-contact100">
     <div class="wrap-contact100">
-        <span class="contact100-form-title" id="titleId" style="font-size:20px;"></span>
-        <span class="contact100-form-title">MONITOR ACTIVE MACHINE</span>
+        <span class="contact100-form-title fs-39">MONITOR ACTIVE MACHINE</span>
+        <span class="contact100-form-title fs-20">{{ $settings['pt_name'] }}</span>
         <div>
             <span class="label-input100">
                 <label style="font-family: Monospace; font-size:large;">datetime :&nbsp;</label>
@@ -14,7 +14,7 @@
         </div><br>
         @foreach ($settings['monitor_list'] as $index => $monitor_list)
             @if ($monitor_list['stat'])
-                <div class="wrap-input100">
+                <div class="wrap-input100"
                     <span class="label-input100">
                         <label style="font-weight:bold; font-size:medium;">{{ $settings['name_list'][$index]['nickname'] }}</label>
                         <label style="font-weight:bold; font-size:smaller">&nbsp;&nbsp;|&nbsp;&nbsp;</label>

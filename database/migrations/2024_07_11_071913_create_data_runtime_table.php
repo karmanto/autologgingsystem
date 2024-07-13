@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataRuntime extends Migration
+class CreateDataRuntimeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -89,6 +89,6 @@ class CreateDataRuntime extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_data_runtime');
+        Schema::dropIfExists('data_runtime');
     }
 }

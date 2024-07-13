@@ -6,10 +6,8 @@
     <div class="wrap-contact100">
         <form class="contact100-form validate-form" action="{{ route('login') }}" method="POST">
         @csrf
-            <span class="contact100-form-title" id="titleId" style="font-size:20px;"></span>
-            <span class="contact100-form-title">
-                LOGIN
-            </span>
+            <span class="contact100-form-title fs-39">LOGIN</span>
+            
             <div class="wrap-input100 validate-input" data-validate="Tidak boleh kosong">
                 <span class="label-input100">Alamat Email</span>
                 <input class="input100 @error('email') is-invalid @enderror" name="email" type="email" id="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
