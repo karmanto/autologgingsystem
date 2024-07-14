@@ -25,9 +25,5 @@ class DatabaseSeeder extends Seeder
         DB::table('data_runtime')->insert([
             'id' => 1,
         ]);
-
-        DB::table('data_monitor')->insert([
-            'id' => 1,
-        ]);
     }
 }

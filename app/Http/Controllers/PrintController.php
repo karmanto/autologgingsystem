@@ -29,8 +29,6 @@ class PrintController extends Controller
     {
         $request->validate([
             'set_date' => 'required|date',
-            'is_proc_calc' => 'required|in:0,1',
-            'is_decimal' => 'required|in:0,1',
         ]);
 
         $setDate = $request->input('set_date');

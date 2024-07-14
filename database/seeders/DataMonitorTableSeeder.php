@@ -25,7 +25,7 @@ class DataMonitorTableSeeder extends Seeder
             'role' => 'superadmin',
         ]);
 
-        $start = Carbon::parse('10 July ' . now()->year)->startOfDay();
+        $start = Carbon::parse('01 July ' . now()->year)->startOfDay();
         $end = Carbon::parse('11 July ' . now()->year)->endOfDay();
 
         $interval = new DateInterval('PT1S');
@@ -55,6 +55,10 @@ class DataMonitorTableSeeder extends Seeder
         }
 
         $recordCount = 0;
+        $lastRecord = null;
+
+        $periodArray = iterator_to_array($period);
+        $lastTime = end($periodArray);
 
         foreach ($period as $time) {
             $record = ['created_at' => $time];
@@ -98,13 +102,38 @@ class DataMonitorTableSeeder extends Seeder
                 $record['cbc2'] = 0;
             }
 
-            $data[] = $record;
-            $recordCount++;
+            $currentRecordWithoutCreatedAt = $record;
+            $lastRecordWithoutCreatedAt = $lastRecord;
+
+            unset($currentRecordWithoutCreatedAt['created_at']);
+            unset($lastRecordWithoutCreatedAt['created_at']);
+
+            if ($lastRecord === null || json_encode($currentRecordWithoutCreatedAt) !== json_encode($lastRecordWithoutCreatedAt)) {
+                $data[] = $record;
+                $lastRecord = $record;
+                $recordCount++;
+            }
 
             if (count($data) >= 1000) {
                 DB::table('data_monitor')->insert($data);
                 $data = [];
                 echo "Inserted 1000 records up to {$record['created_at']}.\n";
+            }
+
+            if ($time == $lastTime) {
+                $allZero = true;
+                foreach ($fields as $field) {
+                    if ($lastRecord && $lastRecord[$field] != 0) {
+                        $allZero = false;
+                        break;
+                    }
+                }
+                if (!$allZero) {
+                    foreach ($fields as $field) {
+                        $record[$field] = 0;
+                    }
+                    $data[] = $record;
+                }
             }
         }
 
@@ -113,7 +142,6 @@ class DataMonitorTableSeeder extends Seeder
             echo "Inserted remaining records up to {$record['created_at']}.\n";
         }
 
-        // Insert the accumulated run seconds into data_runtime table
         DB::table('data_runtime')->insert($runSeconds);
 
         echo "Seeding completed. Total records inserted: {$recordCount}.\n";

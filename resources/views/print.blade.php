@@ -13,28 +13,6 @@
                 <span class="label-input100">Tanggal Print</span>
                 <input class="input100" type="date" name="set_date" min="2010-01-01" id="set_date">
                 <span class="focus-input100"></span>
-            </div>
-
-            <div class="wrap-input100 input100-select">
-                <span class="label-input100">Tampilkan Jam Olah</span>
-                <div>
-                    <select class="selection-2" name="is_proc_calc" id="is_proc_calc">
-                        <option value="1">Ya</option>
-                        <option value="0">Tidak</option>
-                    </select>
-                </div>
-                <span class="focus-input100"></span>
-            </div>
-
-            <div class="wrap-input100 input100-select">
-                <span class="label-input100">Tampilkan total jam operasi mesin dengan <br> &nbsp Jam-Desimal atau Jam-Menit?</span>
-                <div>
-                    <select class="selection-2" name="is_decimal" id="is_decimal">
-                        <option value="1">Jam Desimal</option>
-                        <option value="0">Jam Menit</option>
-                    </select>
-                </div>
-                <span class="focus-input100"></span>
             </div><br><br>
 
             <div class="container-contact100-form-btn">
