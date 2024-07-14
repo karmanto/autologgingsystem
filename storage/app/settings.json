@@ -9,7 +9,7 @@
         "psk": "1234567890",
         "connect_stat": true
     },
-    "pt_name": "PT MMJ",
+    "pt_name": "PT MARITA MAKMUR JAYA",
     "print_list": [
         { "field": "cbc1", "stat": true },
         { "field": "cbc2", "stat": true },
@@ -208,8 +208,5 @@
         { "field": "spr44", "nickname": "", "fullname": "" },
         { "field": "spr45", "nickname": "", "fullname": "" }
     ],
-    "ngrok_link": "",
-    "datetime_conflict": false,
-    "print_tlr": 5,
     "print_start_hour": 7
 }

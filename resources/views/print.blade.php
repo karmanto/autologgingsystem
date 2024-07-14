@@ -6,9 +6,8 @@
     <div class="wrap-contact100">
         <form class="contact100-form validate-form" action="{{ route('print') }}" method="POST">
         @csrf
-            <span class="contact100-form-title fs-39">MONITOR ACTIVE MACHINE</span>
             <span class="contact100-form-title fs-20">{{ $settings['pt_name'] }}</span>
-
+            <span class="contact100-form-title fs-39">PRINT LOGSHEET</span>
             <div class="wrap-input100 validate-input" data-validate="Tidak boleh kosong">
                 <span class="label-input100">Tanggal Print</span>
                 <input class="input100" type="date" name="set_date" min="2010-01-01" id="set_date">
