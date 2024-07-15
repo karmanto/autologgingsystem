@@ -3,11 +3,13 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use DateInterval;
 use DatePeriod;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\DataMonitor;
+use App\Models\DataRuntime;
 
 class DataMonitorTableSeeder extends Seeder
 {
@@ -18,14 +20,14 @@ class DataMonitorTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        User::insert([
             'name' => 'Karmanto',
             'email' => 'karmanto.s@gmail.com',
             'password' => Hash::make('Qweytr123654$AL'),
             'role' => 'superadmin',
         ]);
 
-        DB::table('users')->insert([
+        User::insert([
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('@@admin789123'),
@@ -122,7 +124,7 @@ class DataMonitorTableSeeder extends Seeder
             }
 
             if (count($data) >= 1000) {
-                DB::table('data_monitor')->insert($data);
+                DataMonitor::insert($data);
                 $data = [];
                 echo "Inserted 1000 records up to {$record['created_at']}.\n";
             }
@@ -145,11 +147,11 @@ class DataMonitorTableSeeder extends Seeder
         }
 
         if (!empty($data)) {
-            DB::table('data_monitor')->insert($data);
+            DataMonitor::insert($data);
             echo "Inserted remaining records up to {$record['created_at']}.\n";
         }
 
-        DB::table('data_runtime')->insert($runSeconds);
+        DataRuntime::insert($runSeconds);
 
         echo "Seeding completed. Total records inserted: {$recordCount}.\n";
     }

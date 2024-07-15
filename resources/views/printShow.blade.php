@@ -3,11 +3,15 @@
 
 @section('content')
 <div class="container-contact100">
-
-	<div class="wrap-contact100">
+    <div class="wrap-contact100">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <span class="contact100-form-title fs-20" style="color: #ee2244;">{{ $settings['pt_name'] }}</span>
         <span class="contact100-form-title fs-39">LOGSHEET PREVIEW</span>
-		<p id="preview" style="font-family: Monospace; width:100%; text-align: center;"></p>
+        <p id="preview" style="font-family: Monospace; width:100%; text-align: center;"></p>
         <div class="container-contact100-form-btn" id="printButton">
             <div class="wrap-contact100-form-btn">
                 <div class="contact100-form-bgbtn"></div>
@@ -16,7 +20,18 @@
                 </button>
             </div>
         </div>
-	</div>
+        <div class="container-contact100-form-btn">
+            <div class="wrap-contact100-form-btn">
+                <div class="contact100-form-bgbtn"></div>
+                <form action="{{ route('comment') }}" method="GET">
+                    <input type="hidden" name="set_date" value="{{ $set_date }}">
+                    <button class="contact100-form-btn" type="submit">
+                        <span>INSERT COMMENT</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -28,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const allLogs = @json($allLogs);
     const startDate = @json($startDate);
     const endDate = @json($endDate);
+    const comment = @json($comment);
 
     const ptName = settings["pt_name"];
     let printString = "";
@@ -54,6 +70,14 @@ document.addEventListener("DOMContentLoaded", function() {
         printString += "================================\n";
     }
 
+    if (comment) {
+        printString += leftAlignString(`comment rev: ${comment["rev"]}`, 32, " ") + "\n";
+        printString += leftAlignString(`by: ${comment["by"]}`, 32, " ") + "\n";
+        printString += "--------------------------------\n";
+        printString += adjustAlignSetting(`${comment["comment"]}`, 32, " ") + "\n";
+        printString += "================================\n";
+    }
+
     printString = printString.replace(/ /g, "&nbsp;")
                              .replace(/</g, "&lt;")
                              .replace(/>/g, "&gt;")
@@ -66,17 +90,16 @@ function showPerField(data, key){
     returnString = "";
     if (data["data"] && data["data"].length) {
         for (const key2 in data["data"]) {
+            const date = new Date(data["data"][key2]["changed_at"]);
+            const timePart = String(date.getUTCHours()).padStart(2, '0') + ":" + String(date.getUTCMinutes()).padStart(2, '0') + ":" + String(date.getUTCSeconds()).padStart(2, '0');
             if (key2 == 0) {
-                const timePart = data["data"][key2]["changed_at"].split(' ')[1];
                 returnString += leftAlignString(key, 7, " ") + "|" + timePart + "|";
             } else if (key2 % 2 === 1) {
-                const timePart = data["data"][key2]["changed_at"].split(' ')[1];
                 returnString += timePart + "|";
                 if (key2 < data["data"].length - 1) {
                     returnString += rightAlignString("", 6, " ") + "\n";
                 }
             } else if (key2 % 2 === 0) {
-                const timePart = data["data"][key2]["changed_at"].split(' ')[1];
                 returnString += leftAlignString("", 7, " ") + "|" + timePart + "|";
             }
         }
@@ -107,6 +130,29 @@ function rightAlignString(string, number, filler){
 	};
 	return string;
 }
+
+function adjustAlignSetting(string, number, filler) {
+    let lines = [];
+    let words = string.split(' ');
+    let line = '';
+
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+        if (line.length + word.length <= number) {
+            line += word + ' ';
+        } else {
+            lines.push(line.trim().padEnd(number, filler));
+            line = word + ' ';
+        }
+    }
+    
+    if (line.length > 0) {
+        lines.push(line.trim().padEnd(number, filler));
+    }
+
+    return lines.join("\n");
+}
+
 
 </script>
 <script  src="js/AnyPrint.js" ></script>

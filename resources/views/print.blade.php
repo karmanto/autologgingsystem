@@ -4,8 +4,7 @@
 @section('content')
 <div class="container-contact100">
     <div class="wrap-contact100">
-        <form class="contact100-form validate-form" action="{{ route('print') }}" method="POST">
-        @csrf
+        <form class="contact100-form validate-form" action="{{ route('printPreview') }}" method="GET">
             <span class="contact100-form-title fs-20" style="color: #ee2244;">{{ $settings['pt_name'] }}</span>
             <span class="contact100-form-title fs-39">LOGSHEET</span>
             <div class="wrap-input100 validate-input" data-validate="Tidak boleh kosong">

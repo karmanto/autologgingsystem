@@ -18,6 +18,7 @@ class CreateIssuesTable extends Migration
             $table->timestamps();
             $table->date('process_date');
             $table->string('comment');
+            $table->string('by');
             $table->tinyInteger("rev");
         });
     }

@@ -23,14 +23,16 @@ class FakeDigitalInOut:
     def __init__(self, initial_value):
         self._value = initial_value
         self._last_change_time = time.time()
-        self._change_interval = 5.0
+        self._first_interval = 5.0 
+        self._change_interval = 10000.0
 
     @property
     def value(self):
         current_time = time.time()
-        if current_time - self._last_change_time >= self._change_interval:
+        if current_time - self._last_change_time >= self._first_interval:
             self._value = random.choice([True, False])
             self._last_change_time = current_time
+            self._first_interval = 10000.0 
         return self._value
 
     @value.setter
