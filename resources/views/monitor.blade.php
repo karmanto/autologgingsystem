@@ -4,17 +4,17 @@
 @section('content')
 <div class="container-contact100">
     <div class="wrap-contact100">
-        <span class="contact100-form-title" id="titleId" style="font-size:20px;"></span>
-        <span class="contact100-form-title">MONITOR ACTIVE MACHINE</span>
+        <span class="contact100-form-title fs-20" style="color: #ee2244;">{{ $settings['pt_name'] }}</span>
+        <span class="contact100-form-title fs-39">MONITOR ACTIVE MACHINE</span>
         <div>
             <span class="label-input100">
                 <label style="font-family: Monospace; font-size:large;">datetime :&nbsp;</label>
                 <label id="timeID" style="font-family: Monospace; font-size:large;"></label><br>
             </span>
         </div><br>
-        @foreach ($settings['monitor_list'] as $index => $monitor_list)
-            @if ($monitor_list['stat'])
-                <div class="wrap-input100">
+        @foreach ($settings['show_list'] as $index => $show_list)
+            @if ($show_list['stat'])
+                <div class="wrap-input100"
                     <span class="label-input100">
                         <label style="font-weight:bold; font-size:medium;">{{ $settings['name_list'][$index]['nickname'] }}</label>
                         <label style="font-weight:bold; font-size:smaller">&nbsp;&nbsp;|&nbsp;&nbsp;</label>
@@ -60,8 +60,15 @@
     }
 
     $(document).ready(function() {
+        var currentHostname = window.location.hostname;
+
+        if (currentHostname === 'autologger.local') {
+            setInterval(loadMonitorData, 1000);
+        } else {
+            setInterval(loadMonitorData, 10000);
+        }
+
         loadMonitorData();
-        setInterval(loadMonitorData, 5000);
     });
 </script>
 @endsection

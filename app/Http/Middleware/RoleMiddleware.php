@@ -15,7 +15,7 @@ class RoleMiddleware
 
         $user = Auth::user();
         if ($user->role !== $role) {
-            return redirect('/home');
+            return redirect('/monitor');
         }
 
         return $next($request);

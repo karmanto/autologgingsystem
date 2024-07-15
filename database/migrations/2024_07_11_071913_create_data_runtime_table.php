@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataRuntime extends Migration
+class CreateDataRuntimeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class CreateDataRuntime extends Migration
     {
         Schema::create('data_runtime', function (Blueprint $table) {
             $table->id();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->bigInteger('cbc1')->default(0);
             $table->bigInteger('cbc2')->default(0);
             $table->bigInteger('prs1')->default(0);
@@ -89,6 +90,6 @@ class CreateDataRuntime extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_data_runtime');
+        Schema::dropIfExists('data_runtime');
     }
 }
