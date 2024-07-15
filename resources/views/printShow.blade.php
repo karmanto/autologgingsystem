@@ -5,9 +5,17 @@
 <div class="container-contact100">
 
 	<div class="wrap-contact100">
-        <span class="contact100-form-title fs-20">{{ $settings['pt_name'] }}</span>
-        <span class="contact100-form-title fs-39">LOGSHEET</span>
+        <span class="contact100-form-title fs-20" style="color: #ee2244;">{{ $settings['pt_name'] }}</span>
+        <span class="contact100-form-title fs-39">LOGSHEET PREVIEW</span>
 		<p id="preview" style="font-family: Monospace; width:100%; text-align: center;"></p>
+        <div class="container-contact100-form-btn" id="printButton">
+            <div class="wrap-contact100-form-btn">
+                <div class="contact100-form-bgbtn"></div>
+                <button class="contact100-form-btn" type="button" onclick="AnyPrint.Print('preview')">
+                    <span>PRINT</span>
+                </button>
+            </div>
+        </div>
 	</div>
 </div>
 @endsection
@@ -21,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const startDate = @json($startDate);
     const endDate = @json($endDate);
 
-
     const ptName = settings["pt_name"];
     let printString = "";
     printString += centerAlignString(`${ptName}`, 32, " ") + "\n";
@@ -33,14 +40,19 @@ document.addEventListener("DOMContentLoaded", function() {
     const keys = Object.keys(allLogs);
     const totalKeys = keys.length;
 
-    keys.forEach((key, index) => {
-        printString += showPerField(allLogs[key], key);
-        if (index < totalKeys - 1) {
-            printString += "\n--------------------------------\n";
-        } else {
-            printString += "\n================================\n";
-        }
-    });
+    if (totalKeys > 0) {
+        keys.forEach((key, index) => {
+            printString += showPerField(allLogs[key], key);
+            if (index < totalKeys - 1) {
+                printString += "\n--------------------------------\n";
+            } else {
+                printString += "\n================================\n";
+            }
+        });
+    } else {
+        printString += centerAlignString(`no data`, 32, " ") + "\n";
+        printString += "================================\n";
+    }
 
     printString = printString.replace(/ /g, "&nbsp;")
                              .replace(/</g, "&lt;")
@@ -97,4 +109,5 @@ function rightAlignString(string, number, filler){
 }
 
 </script>
+<script  src="js/AnyPrint.js" ></script>
 @endsection

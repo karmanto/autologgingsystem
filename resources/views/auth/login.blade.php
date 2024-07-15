@@ -22,6 +22,10 @@
                 <span class="focus-input100">{{ $message }}</span>
                 @enderror
             </div>
+            <div>
+                <input class="checkbox" type="checkbox" name="remember" id="remember">
+                <label class="label-input100" for="remember">Ingatkan saya</label>
+            </div>
             <div class="container-contact100-form-btn">
                 <div class="wrap-contact100-form-btn">
                     <div class="contact100-form-bgbtn"></div>
