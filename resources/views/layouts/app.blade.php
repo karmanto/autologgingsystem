@@ -7,15 +7,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="{{ asset('contactform/vendor/bootstrap/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('contactform/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('contactform/vendor/animate/animate.css') }}">
-	<link rel="stylesheet" href="{{ asset('contactform/vendor/css-hamburgers/hamburgers.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('contactform/vendor/animsition/css/animsition.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('contactform/vendor/select2/select2.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('contactform/vendor/daterangepicker/daterangepicker.css') }}">
+	<!-- <link rel="stylesheet" href="{{ asset('contactform/vendor/animate/animate.css') }}"> -->
+	<!-- <link rel="stylesheet" href="{{ asset('contactform/vendor/css-hamburgers/hamburgers.min.css') }}"> -->
+	<!-- <link rel="stylesheet" href="{{ asset('contactform/vendor/animsition/css/animsition.min.css') }}"> -->
+	<!-- <link rel="stylesheet" href="{{ asset('contactform/vendor/select2/select2.min.css') }}"> -->
+	<!-- <link rel="stylesheet" href="{{ asset('contactform/vendor/daterangepicker/daterangepicker.css') }}"> -->
 	<link rel="stylesheet" href="{{ asset('contactform/css/util.css') }}">
 	<link rel="stylesheet" href="{{ asset('contactform/css/main.css') }}">
 	<link rel="stylesheet" href="{{ asset('dropdownmenu/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> -->
     @yield('css')
 </head>
 <body>
@@ -59,19 +59,19 @@
     </div>
 
     <script src="contactform/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="contactform/vendor/animsition/js/animsition.min.js"></script>
+    <!-- <script src="contactform/vendor/animsition/js/animsition.min.js"></script> -->
     <script src="contactform/vendor/bootstrap/js/popper.js"></script>
     <script src="contactform/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="contactform/vendor/select2/select2.min.js"></script>
-    <script>
+    <!-- <script src="contactform/vendor/select2/select2.min.js"></script> -->
+    <!-- <script>
         $(".selection-2").select2({
             minimumResultsForSearch: 100,
             dropdownParent: $('#dropDownSelect1')
         });
-    </script>
-    <script src="contactform/vendor/daterangepicker/moment.min.js"></script>
-    <script src="contactform/vendor/daterangepicker/daterangepicker.js"></script>
-    <script src="contactform/vendor/countdowntime/countdowntime.js"></script>
+    </script> -->
+    <!-- <script src="contactform/vendor/daterangepicker/moment.min.js"></script> -->
+    <!-- <script src="contactform/vendor/daterangepicker/daterangepicker.js"></script> -->
+    <!-- <script src="contactform/vendor/countdowntime/countdowntime.js"></script> -->
     <script src="contactform/js/main.js"></script>
     <script  src="dropdownmenu/js/index.js"></script>
     @yield('scripts')

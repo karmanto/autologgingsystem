@@ -1,3 +1,4 @@
+<!-- resources/views/comment.blade.php -->
 @extends('layouts.app')
 
 @section('content')

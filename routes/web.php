@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MonitorController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrintController;
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +29,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('comment', [PrintController::class, 'comment'])->name('comment');
     Route::post('insertComment', [PrintController::class, 'insertComment'])->name('insertComment');
 
-    Route::post('graph', [PrintController::class, 'graph'])->name('grpah');
-    Route::get('graph', [PrintController::class, 'showGraph'])->name('graph');
+    Route::get('graphPreview', [GraphController::class, 'graphPreview'])->name('graphPreview');
+    Route::get('graph', [GraphController::class, 'graph'])->name('graph');
 });
 
 Route::middleware(['auth', 'role:superadmin'])->group(function () {

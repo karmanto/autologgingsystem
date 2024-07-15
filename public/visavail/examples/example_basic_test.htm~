@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Visavail.js Example: Basic Configuration</title>
+
+    <!-- Visavail.js style -->
+    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+    <link href='../visavail/css/visavail.css' rel='stylesheet' type='text/css'>
+
+    <!-- font-awesome -->
+    <script src="https://use.fontawesome.com/8321cacbf6.js"></script>
+    <!--
+    Note: This should be replaced by
+        <link href='./vendors/font-awesome/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    when implemented in your project.
+    -->
+
+    <!-- body style for this example -->
+    <style>
+        body {
+            font-family: "Muli", "Helvetica", Arial, sans-serif;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>Visavail.js Basic Example</h1>
+<p>This example demonstrates the basic use of <a href="http://www.github.com/flrs/visavail"
+                                                 target="_blank">Visavail.js</a>.</p>
+
+<p id="example"><!-- Visavail.js chart will be placed here --></p>
+
+<!-- Visavail.js scripts -->
+<script src="../vendors/moment/moment-with-locales.min.js" type="text/javascript"></script>
+<script>
+    moment.locale('en');
+</script>
+<script src="../vendors/d3/d3.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var dataset = [{
+        "measure": "Weekly Report",
+        "interval_s": 1,
+        "data": [
+            ["2014-07-07 07:00:00", 1],
+            ["2014-07-07 12:02:00", 0],
+            ["2014-07-07 12:20:00", 1],
+            ["2014-07-07 23:02:00", 0]
+        ]
+    }];
+</script>
+<script src="../visavail/js/visavail.js"></script>
+
+<script>
+    // draw Visavail.js chart
+    var chart = visavailChart().width(900);
+
+    d3.select("#example")
+            .datum(dataset)
+            .call(chart);
+</script>
+
+</body>
+
+</html>

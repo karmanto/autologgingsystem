@@ -108,12 +108,6 @@ class PrintController extends Controller
 
     }
 
-    public function insertCommentSuccess(Request $request)
-    {
-        $set_date = $request->session()->get('set_date');
-        dd($set_date);
-    }
-
     private function generateChangeLogs(array $results)
     {
         $changeLogs = [];

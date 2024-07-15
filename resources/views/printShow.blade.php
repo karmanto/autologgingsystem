@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (comment) {
         printString += leftAlignString(`comment rev: ${comment["rev"]}`, 32, " ") + "\n";
         printString += leftAlignString(`by: ${comment["by"]}`, 32, " ") + "\n";
+        printString += leftAlignString(`date comment: ${formatDate(comment["created_at"])}`, 32, " ") + "\n";
         printString += "--------------------------------\n";
         printString += adjustAlignSetting(`${comment["comment"]}`, 32, " ") + "\n";
         printString += "================================\n";
@@ -86,12 +87,24 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("preview").innerHTML = printString;
 });
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
+}
+
 function showPerField(data, key){
     returnString = "";
     if (data["data"] && data["data"].length) {
         for (const key2 in data["data"]) {
             const date = new Date(data["data"][key2]["changed_at"]);
-            const timePart = String(date.getUTCHours()).padStart(2, '0') + ":" + String(date.getUTCMinutes()).padStart(2, '0') + ":" + String(date.getUTCSeconds()).padStart(2, '0');
+            const timePart = String(date.getHours()).padStart(2, '0') + ":" + String(date.getMinutes()).padStart(2, '0') + ":" + String(date.getSeconds()).padStart(2, '0');
             if (key2 == 0) {
                 returnString += leftAlignString(key, 7, " ") + "|" + timePart + "|";
             } else if (key2 % 2 === 1) {

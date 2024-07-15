@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use DateTime;
+use App\Models\Issue;
+use App\Models\DataMonitor;
+use Illuminate\Support\Facades\Auth;
 
 class GraphController extends Controller
 {
@@ -21,123 +23,57 @@ class GraphController extends Controller
         }), 'field');
     }
     
-    public function showGraph()
+    public function graph()
     {
         return view('graph', ['settings' => $this->settings]);
     }
 
-    public function graph(Request $request)
+    public function graphPreview(Request $request)
     {
         $request->validate([
             'set_date' => 'required|date',
         ]);
 
         $setDate = $request->input('set_date');
-        $graphStartHour = str_pad($this->settings['graph_start_hour'], 2, "0", STR_PAD_LEFT);
+        $graphStartHour = str_pad($this->settings['print_start_hour'], 2, "0", STR_PAD_LEFT);
         $startDateTime = "$setDate $graphStartHour:00:00";
         $endDateTime = date('Y-m-d H:i:s', strtotime("$startDateTime +1 day"));
         $fieldsToSelect = array_merge(['created_at'], $this->graphListFields);
 
-        $results = DB::table('data_monitor')
-                    ->select($fieldsToSelect)
+        $results = DataMonitor::select($fieldsToSelect)
                     ->whereBetween('created_at', [$startDateTime, $endDateTime])
                     ->get();
 
-        $allLogs = $this->generateChangeLogs($results->toArray());
-
-        $startDateTimeObj = new DateTime($startDateTime);
-        $formattedStartDateTime = $startDateTimeObj->format('d-m-y H:i');
-
-        $endDateTimeObj = new DateTime($endDateTime);
-        $formattedEndDateTime = $endDateTimeObj->format('d-m-y H:i');
+        $changeLogs = $this->generateChangeLogs($results->toArray());
 
         return view('graphShow', [
-            'allLogs' => $allLogs,
+            'changeLogs' => $changeLogs,
             'settings' => $this->settings,
-            'startDate' => $formattedStartDateTime,
-            'endDate' => $formattedEndDateTime,
-
         ]);
     }
 
     private function generateChangeLogs(array $results)
     {
         $changeLogs = [];
-        $previousValues = [];
-        $lastResults = end($results);
-        $runHourLogs = [];
-        $allLogs = [];
 
         foreach ($results as $result) {
             foreach ($this->graphListFields as $field) {
-                if (!isset($result->$field)) continue;
+                if (!isset($result[$field])) continue;
 
-                $value = $result->$field;
+                $value = $result[$field];
 
-                if (!isset($changeLogs[$field])) {
-                    $changeLogs[$field] = [];
-                    if ($value == 1) {
-                        $changeLogs[$field][] = $this->createChangeLog($value, $result->created_at);
-                    }
-                }
-
-                if (isset($previousValues[$field]) && $previousValues[$field] != $value) {
-                    $changeLogEntry = $this->createChangeLog($value, $result->created_at);
-                    if ($value == 0 && !empty($changeLogs[$field])) {
-                        $lastChangeLog = end($changeLogs[$field]);
-                        if (isset($runHourLogs[$field])) {
-                            $runHourLogs[$field] += $this->calculateRunHour($lastChangeLog['changed_at'], $result->created_at);
-                        } else {
-                            $runHourLogs[$field] = $this->calculateRunHour($lastChangeLog['changed_at'], $result->created_at);
-                        }
-                    }
-                    $changeLogs[$field][] = $changeLogEntry;
-                }
-
-                if ($result == $lastResults && $value == 1) {
-                    $changeLogEntry = $this->createChangeLog(0, $result->created_at);
-                    $lastChangeLog = end($changeLogs[$field]);
-                    if (isset($runHourLogs[$field])) {
-                        $runHourLogs[$field] += $this->calculateRunHour($lastChangeLog['changed_at'], $result->created_at);
-                    } else {
-                        $runHourLogs[$field] = $this->calculateRunHour($lastChangeLog['changed_at'], $result->created_at);
-                    }
-                    $changeLogs[$field][] = $changeLogEntry;
-                }
-
-                $previousValues[$field] = $value;
+                $changeLogs[$field][] = $this->createChangeLog($value, $result['created_at']);
             }
         }
 
-        foreach ($changeLogs as $index => $item) {
-            if (!isset($allLogs[$index])) {
-                $allLogs[$index] = ['data' => $item, 'runHour' => 0];
-            }
-        }
-
-        foreach ($runHourLogs as $index => $item) {
-            if (isset($allLogs[$index]['runHour'])) {
-                $allLogs[$index]['runHour'] = $item;
-            }
-        }
-        
-
-        return $allLogs;
+        return $changeLogs;
     }
 
-    private function createChangeLog($value, $changedAt)
+    private function createChangeLog($value, $createdAt)
     {
         return [
             'value' => $value,
-            'changed_at' => $changedAt
+            'created_at' => $createdAt
         ];
-    }
-
-    private function calculateRunHour($start, $end)
-    {
-        $startTimestamp = strtotime($start);
-        $endTimestamp = strtotime($end);
-        $hours = ($endTimestamp - $startTimestamp) / 3600;
-        return round($hours, 2);
     }
 }
