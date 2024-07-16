@@ -1,4 +1,4 @@
 *
 !public/
 !.gitignore
-!settings.json
+!settings.json.example
