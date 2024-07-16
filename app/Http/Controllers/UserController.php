@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('role', '!=', 'superadmin')->get();
+        $users = User::whereNotIn('role', ['superadmin', 'admin'])->get();
         return view('users.index', compact('users'));
     }
 
@@ -46,8 +46,8 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        if ($user->role == 'superadmin') {
-            return redirect()->route('users.index')->with('error', 'Cannot edit superadmin user.');
+        if ($user->role == 'superadmin' || $user->role == 'admin') {
+            return redirect()->route('users.index')->with('error', 'Cannot edit this user.');
         }
 
         $user->update([
@@ -69,8 +69,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if ($user->role == 'superadmin') {
-            return redirect()->route('users.index')->with('error', 'Cannot delete superadmin user.');
+        if ($user->role == 'superadmin' || $user->role == 'admin') {
+            return redirect()->route('users.index')->with('error', 'Cannot delete this user.');
         }
 
         $user->delete();

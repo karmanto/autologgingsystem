@@ -29,7 +29,7 @@
     <div class="table_center" style="z-index:1;">
         <div class="drop-down">
             <div id="dropDown" class="drop-down__button">
-                @if (Auth::user()->role === 'superadmin')
+                @if (Auth::user()->role === 'superadmin' || Auth::user()->role === 'admin')
                 <span class="drop-down__name">&nbsp &nbsp &nbsp &nbsp Menu Admin &nbsp &nbsp</span>
                 @else
                 <span class="drop-down__name">&nbsp &nbsp &nbsp &nbsp Menu &nbsp &nbsp</span>
@@ -47,7 +47,7 @@
                     </li>
                     <li class="drop-down__item" onclick="window.location.replace('graph')">Grafik
                     </li> 
-                    @if (Auth::user()->role === 'superadmin')
+                    @if (Auth::user()->role === 'superadmin' || Auth::user()->role === 'admin')
                     <li class="drop-down__item" onclick="window.location.replace('users')">CRUD User
                     </li> 
                     <li class="drop-down__item" onclick="window.location.replace('profilView')">Edit Profil

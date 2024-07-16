@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('graph', [GraphController::class, 'graph'])->name('graph');
 });
 
-Route::middleware(['auth', 'role:superadmin'])->group(function () {
+Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::get('profilView', [ProfilController::class, 'index'])->name('profilView');
     Route::post('profil', [ProfilController::class, 'profil'])->name('profil');
