@@ -58,7 +58,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (totalKeys > 0) {
         keys.forEach((key, index) => {
-            printString += showPerField(allLogs[key], key);
+            const nickname = settings["name_list"].find(item => item.field === "cbc1").nickname;
+            printString += showPerField(allLogs[key], key, nickname);
             if (index < totalKeys - 1) {
                 printString += "\n--------------------------------\n";
             } else {
@@ -99,14 +100,14 @@ function formatDate(dateString) {
     return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
 
-function showPerField(data, key){
+function showPerField(data, key, nickname){
     returnString = "";
     if (data["data"] && data["data"].length) {
         for (const key2 in data["data"]) {
             const date = new Date(data["data"][key2]["changed_at"]);
             const timePart = String(date.getHours()).padStart(2, '0') + ":" + String(date.getMinutes()).padStart(2, '0') + ":" + String(date.getSeconds()).padStart(2, '0');
             if (key2 == 0) {
-                returnString += leftAlignString(key, 7, " ") + "|" + timePart + "|";
+                returnString += leftAlignString(nickname, 7, " ") + "|" + timePart + "|";
             } else if (key2 % 2 === 1) {
                 returnString += timePart + "|";
                 if (key2 < data["data"].length - 1) {

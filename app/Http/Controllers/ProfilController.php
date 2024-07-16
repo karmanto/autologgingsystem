@@ -30,7 +30,7 @@ class ProfilController extends Controller
         $this->settings['pt_name'] = $request->name;
         $this->settings['print_start_hour'] = $request->hour;
 
-        Storage::put('settings.json', json_encode($this->settings));
+        Storage::put('settings.json', json_encode($this->settings, JSON_PRETTY_PRINT));
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
     }

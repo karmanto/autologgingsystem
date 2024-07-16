@@ -8,7 +8,7 @@
             {{ session('success') }}
         </div>
     @endif
-        <form class="contact100-form validate-form" action="{{ route('ngrokStatic') }}" method="POST">
+        <form class="contact100-form validate-form" action="{{ route('ngrokStatic.update') }}" method="POST">
         @csrf
             <span class="contact100-form-title fs-39">NGROK STATIC</span>
             @if ($errors->any())

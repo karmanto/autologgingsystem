@@ -27,7 +27,7 @@ class NgrokStaticController extends Controller
         }
 
         $this->settings['ngrok_static'] = $request->ngrokStatic;
-        Storage::put('settings.json', json_encode($this->settings));
+        Storage::put('settings.json', json_encode($this->settings, JSON_PRETTY_PRINT));
 
         $flagFilePath = storage_path('app/ngrok_static.txt');
         if (!file_exists($flagFilePath)) {

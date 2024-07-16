@@ -50,11 +50,13 @@
                     @if (Auth::user()->role === 'superadmin' || Auth::user()->role === 'admin')
                     <li class="drop-down__item" onclick="window.location.replace('users')">CRUD User
                     </li> 
-                    <li class="drop-down__item" onclick="window.location.replace('profilView')">Edit Profil
+                    <li class="drop-down__item" onclick="window.location.replace('profil')">Edit Profil
                     </li> 
-                    <li class="drop-down__item" onclick="window.location.replace('wifiClientView')">Edit Wifi Client
+                    <li class="drop-down__item" onclick="window.location.replace('wifiClient')">Edit Wifi Client
                     </li> 
-                    <li class="drop-down__item" onclick="window.location.replace('ngrokStaticView')">Ngrok Static Domain
+                    <li class="drop-down__item" onclick="window.location.replace('ngrokStatic')">Ngrok Static Domain
+                    </li> 
+                    <li class="drop-down__item" onclick="window.location.replace('config')">Active Machine List
                     </li> 
                     <li class="drop-down__item" onclick="window.location.replace('info')">Online Status
                     </li> 

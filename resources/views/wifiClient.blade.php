@@ -8,7 +8,7 @@
             {{ session('success') }}
         </div>
     @endif
-        <form class="contact100-form validate-form" action="{{ route('wifiClient') }}" method="POST">
+        <form class="contact100-form validate-form" action="{{ route('wifiClient.update') }}" method="POST">
         @csrf
             <span class="contact100-form-title fs-39">EDIT WIFI CLIENT</span>
             @if ($errors->any())

@@ -30,7 +30,7 @@ class WifiClientController extends Controller
         $this->settings['wifi_client']['ssid'] = $request->ssid;
         $this->settings['wifi_client']['psk'] = $request->psk;
 
-        Storage::put('settings.json', json_encode($this->settings));
+        Storage::put('settings.json', json_encode($this->settings, JSON_PRETTY_PRINT));
         
         $flagFilePath = storage_path('app/wifi_client_flag.txt');
         if (!file_exists($flagFilePath)) {

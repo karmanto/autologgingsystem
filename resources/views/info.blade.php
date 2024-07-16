@@ -3,7 +3,6 @@
 @section('content')
 <div class="container-contact100">
     <div class="wrap-contact100">
-        <span class="contact100-form-title fs-20" style="color: #ee2244;">{{ $settings['pt_name'] }}</span>
         <span class="contact100-form-title fs-39">ONLINE STATUS</span>
         <div>
             <span class="label-input100">
