@@ -4,6 +4,7 @@ import json
 import datetime
 import os
 from dotenv import load_dotenv
+import shutil
 
 load_dotenv()
 
@@ -25,6 +26,14 @@ PREV_INPUTS = [0] * 66
 TIME_REC = 0
 PREV_TIME = 0
 CURR_TIME = 0
+
+try:
+    with open(config.SETTINGS_JSON_PATH, 'r') as monitor_file:
+        pass
+except FileNotFoundError:
+    shutil.copy(config.SETTINGS_JSON_PATH + ".example", config.SETTINGS_JSON_PATH)
+except Exception as e:
+    print(e)
 
 DB_INIT, DB = config.get_db_connection()
 while not DB_INIT:
@@ -125,7 +134,6 @@ while True:
 
             with open(config.JSON_PATH, 'w') as monitor_file:
                 json.dump(monitor_data, monitor_file, indent=4)
-
         except FileNotFoundError:
             now = datetime.datetime.now()
             monitor_data = {
