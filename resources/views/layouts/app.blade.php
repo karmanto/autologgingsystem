@@ -54,6 +54,8 @@
                     </li> 
                     <li class="drop-down__item" onclick="window.location.replace('wifiClientView')">Edit Wifi Client
                     </li> 
+                    <li class="drop-down__item" onclick="window.location.replace('ngrokStaticView')">Ngrok Static Domain
+                    </li> 
                     <li class="drop-down__item" onclick="window.location.replace('info')">Online Status
                     </li> 
                     @endif 

@@ -136,5 +136,6 @@
         {"field": "spr44", "nickname": "", "fullname": ""},
         {"field": "spr45", "nickname": "", "fullname": ""}
     ],
-    "print_start_hour": "7"
+    "print_start_hour": "7",
+    "ngrok_static": ""
 }

@@ -33,6 +33,10 @@ class WifiClientController extends Controller
         Storage::put('settings.json', json_encode($this->settings));
         
         $flagFilePath = storage_path('app/wifi_client_flag.txt');
+        if (!file_exists($flagFilePath)) {
+            Storage::put('wifi_client_flag.txt', '');
+        }
+
         if (file_put_contents($flagFilePath, "{$request->ssid}\n{$request->psk}") !== false) {
             return redirect()->back()->with('success', 'Wifi Client berhasil diperbarui! Perbarui pengaturan Wi-Fi. Sistem Restart');
         } else {

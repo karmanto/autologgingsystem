@@ -5,6 +5,7 @@ use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\InfoControlller;
+use App\Http\Controllers\NgrokStaticController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WifiClientController;
@@ -38,9 +39,15 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::resource('users', UserController::class);
+
     Route::get('profilView', [ProfilController::class, 'index'])->name('profilView');
     Route::post('profil', [ProfilController::class, 'profil'])->name('profil');
+
     Route::get('info', [InfoControlller::class, 'index'])->name('info');
+
     Route::get('wifiClientView', [WifiClientController::class, 'index'])->name('wifiClientView');
     Route::post('wifiClient', [WifiClientController::class, 'wifiClient'])->name('wifiClient');
+
+    Route::get('ngrokStaticView', [NgrokStaticController::class, 'index'])->name('ngrokStaticView');
+    Route::post('ngrokStatic', [NgrokStaticController::class, 'ngrokStatic'])->name('ngrokStatic');
 });
