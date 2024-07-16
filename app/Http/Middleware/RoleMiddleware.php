@@ -7,18 +7,18 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
         if (!Auth::check()) {
             return redirect('/login');
         }
 
         $user = Auth::user();
-        if ($user->role !== $role) {
-            return redirect('/monitor');
+        if (in_array($user->role, $roles)) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/monitor');
     }
 }
 

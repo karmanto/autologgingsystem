@@ -1,7 +1,5 @@
 import json
 import time
-import socket
-import uuid
 import os
 import subprocess
 from dotenv import load_dotenv
@@ -13,7 +11,11 @@ if os.getenv('FAKE_CONFIG', 'false').lower() == 'true':
 else:
     import config
 
-file_path = config.INFO_JSON_PATH
+FILE_PATH = config.INFO_JSON_PATH
+INTERVAL = 10
+ONLINE_STATUS = False
+PREV_TIME = 0
+CURR_TIME = 0
 
 def get_online_status():
     try:
@@ -33,15 +35,17 @@ def get_ifconfig_output():
 
 def update_json():
     try:
-        with open(file_path, 'r') as json_file:
+        with open(FILE_PATH, 'r') as json_file:
             data = json.load(json_file)
 
+        ONLINE_STATUS = get_online_status()
+
         data.update({
-            "online_status": get_online_status(),
+            "online_status": ONLINE_STATUS,
             "ifconfig": get_ifconfig_output()
         })
 
-        with open(file_path, 'w') as json_file:
+        with open(FILE_PATH, 'w') as json_file:
             json.dump(data, json_file, indent=4)
 
     except FileNotFoundError:
@@ -49,14 +53,20 @@ def update_json():
             "online_status": "",
             "ifconfig": ""
         }
-        with open(file_path, 'w') as monitor_file:
+        with open(FILE_PATH, 'w') as monitor_file:
             json.dump(data, monitor_file, indent=4)
 
     except Exception as e:
         print(f"Error updating json: {e}")
 
-interval = 5
-
 while True:
-    update_json()
-    time.sleep(interval)
+    time.sleep(.5)
+    if ONLINE_STATUS:
+        config.RPI_OUTPUT_ARRAY[1].value = not config.RPI_OUTPUT_ARRAY[1].value
+    else:
+        config.RPI_OUTPUT_ARRAY[1].value = True
+
+    CURR_TIME = int(time.time())
+    if CURR_TIME - PREV_TIME > INTERVAL:
+        PREV_TIME = CURR_TIME
+        update_json()

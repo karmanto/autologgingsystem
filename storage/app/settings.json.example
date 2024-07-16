@@ -1,13 +1,7 @@
 {
-    "wifi_ap": {
-        "ssid": "Auto Logging System",
-        "wpa_passphrase": "1234567890",
-        "up_stat": true
-    },
     "wifi_client": {
         "ssid": "mmj_wifi",
-        "psk": "1234567890",
-        "connect_stat": true
+        "psk": "1234567890"
     },
     "pt_name": "PT MARITA MAKMUR JAYA",
     "show_list": [

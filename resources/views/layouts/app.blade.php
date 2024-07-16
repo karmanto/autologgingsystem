@@ -52,6 +52,10 @@
                     </li> 
                     <li class="drop-down__item" onclick="window.location.replace('profilView')">Edit Profil
                     </li> 
+                    <li class="drop-down__item" onclick="window.location.replace('wifiClientView')">Edit Wifi Client
+                    </li> 
+                    <li class="drop-down__item" onclick="window.location.replace('info')">Online Status
+                    </li> 
                     @endif 
                     <li class="drop-down__item" onclick="window.location.replace('logout')">Logout
                     </li>
