@@ -48,7 +48,9 @@
                     <li class="drop-down__item" onclick="window.location.replace('graph')">Grafik
                     </li> 
                     @if (Auth::user()->role === 'superadmin')
-                    <li class="drop-down__item" onclick="window.location.replace('users')">User
+                    <li class="drop-down__item" onclick="window.location.replace('users')">CRUD User
+                    </li> 
+                    <li class="drop-down__item" onclick="window.location.replace('profilView')">Edit Profil
                     </li> 
                     @endif 
                     <li class="drop-down__item" onclick="window.location.replace('logout')">Logout

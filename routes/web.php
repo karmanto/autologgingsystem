@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -35,4 +36,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::resource('users', UserController::class);
+    Route::get('profilView', [ProfilController::class, 'index'])->name('profilView');
+    Route::post('profil', [ProfilController::class, 'profil'])->name('profil');
 });

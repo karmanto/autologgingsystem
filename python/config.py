@@ -25,6 +25,7 @@ FIELD_STRING = "cbc1,cbc2,prs1,prs2,prs3,prs4,prs5,prs6,prs7,prs8,dtr1,dtr2,dtr3
 RPI_OUTPUT_ARRAY = [digitalio.DigitalInOut(pin) for pin in [_OUT1, _OUT2, _OUT3]]
 RPI_INPUT_ARRAY = [digitalio.DigitalInOut(pin) for pin in _RPI_PIN_ARRAY]
 JSON_PATH = "./storage/app/monitor.json"
+INFO_JSON_PATH = "./storage/app/info.json"
 
 def get_db_connection():
     try:

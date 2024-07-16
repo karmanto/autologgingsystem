@@ -29,9 +29,16 @@ class DataMonitorTableSeeder extends Seeder
 
         User::insert([
             'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'email' => 'admin@mmj',
             'password' => Hash::make('@@admin789123'),
             'role' => 'superadmin',
+        ]);
+
+        User::insert([
+            'name' => 'Operator',
+            'email' => 'operator@mmj',
+            'password' => Hash::make('@operator123'),
+            'role' => 'operator',
         ]);
 
         $start = Carbon::parse('01 July ' . now()->year)->startOfDay();

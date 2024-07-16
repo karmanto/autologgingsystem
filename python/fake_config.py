@@ -58,6 +58,7 @@ class FakeDigitalInOut:
 RPI_OUTPUT_ARRAY = [FakeDigitalInOut(False) for _ in range(3)]
 RPI_INPUT_ARRAY = [FakeDigitalInOut(False) for _ in _RPI_PIN_ARRAY]
 JSON_PATH = "../storage/app/monitor.json"
+INFO_JSON_PATH = "../storage/app/info.json"
 
 def get_db_connection():
     try:
