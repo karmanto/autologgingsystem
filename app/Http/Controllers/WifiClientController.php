@@ -24,7 +24,7 @@ class WifiClientController extends Controller
     {
         $request->validate([
             'ssid' => 'required|string|max:32',
-            'psk' => 'required|string|min:8|max:63',
+            'psk' => 'required|string|max:63',
         ]);
         
         $this->settings['wifi_client']['ssid'] = $request->ssid;
