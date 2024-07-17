@@ -28,7 +28,7 @@ PREV_TIME = 0
 CURR_TIME = 0
 
 try:
-    with open(config.SETTINGS_JSON_PATH, 'r') as monitor_file:
+    with open(config.SETTINGS_JSON_PATH, 'r') as setting_file:
         pass
 except FileNotFoundError:
     shutil.copy(config.SETTINGS_JSON_PATH + ".example", config.SETTINGS_JSON_PATH)
@@ -49,6 +49,7 @@ for index, runsecond in enumerate(ROW_RUNTIME):
 
 try:
     CURSOR.execute("INSERT INTO data_monitor (created_at) VALUES (%s)", (ROW_RUNTIME[1],))
+    DB.commit()
 except Exception as e:
     print(e)
 
@@ -98,6 +99,7 @@ while True:
                             INPUTS[60], INPUTS[61], INPUTS[62], INPUTS[63]
                             )
                         )
+            DB.commit()
 
         CURSOR.execute	(	"UPDATE data_runtime SET cbc1=(%s), cbc2=(%s), prs1=(%s), prs2=(%s), prs3=(%s), prs4=(%s), prs5=(%s), prs6=(%s), prs7=(%s), prs8=(%s), dtr1=(%s), dtr2=(%s), dtr3=(%s), dtr4=(%s), dtr5=(%s), dtr6=(%s), dtr7=(%s), dtr8=(%s), " +
                             "spr0=(%s), spr1=(%s), spr2=(%s), spr3=(%s), spr4=(%s), spr5=(%s), spr6=(%s), spr7=(%s), spr8=(%s), spr9=(%s), " +
