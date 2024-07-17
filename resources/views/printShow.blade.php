@@ -119,7 +119,7 @@ function showPerField(data, key, nickname){
         }
         returnString += rightAlignString(data["runHour"].toFixed(2), 6, " ");
     } else {
-        returnString += leftAlignString(key, 7, " ") + "|        |        |     0";
+        returnString += leftAlignString(nickname, 7, " ") + "|        |        |     0";
     }
     return returnString;
 }
