@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (totalKeys > 0) {
         keys.forEach((key, index) => {
-            const nickname = settings["name_list"].find(item => item.field === "cbc1").nickname;
+            const nickname = settings["name_list"].find(item => item.field === key).nickname;
             printString += showPerField(allLogs[key], key, nickname);
             if (index < totalKeys - 1) {
                 printString += "\n--------------------------------\n";
