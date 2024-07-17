@@ -56,7 +56,7 @@
     </style>
 </head>
 <body>
-    <h1>{{ config('app.name', 'Config Management') }}</h1>
+    <h1>ACTIVE MACHINE LIST</h1>
 
     <a href="{{ route('monitor') }}" style="display: block; margin-bottom: 20px;">&larr; Back to Monitor</a>
 

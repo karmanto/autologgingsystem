@@ -62,10 +62,10 @@ def update_json():
 
 while True:
     time.sleep(.5)
-    if ONLINE_STATUS:
-        config.RPI_OUTPUT_ARRAY[1].value = not config.RPI_OUTPUT_ARRAY[1].value
-    else:
-        config.RPI_OUTPUT_ARRAY[1].value = True
+    #if ONLINE_STATUS:
+        #config.RPI_OUTPUT_ARRAY[1].value = not config.RPI_OUTPUT_ARRAY[1].value
+    #else:
+        #config.RPI_OUTPUT_ARRAY[1].value = True
 
     CURR_TIME = int(time.time())
     if CURR_TIME - PREV_TIME > INTERVAL:

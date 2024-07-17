@@ -20,7 +20,7 @@
             @endif
             <div class="wrap-input100 validate-input" data-validate="Tidak boleh kosong">
                 <span class="label-input100">NGROK Static Domain</span>
-                <input class="input100 @error('ngrokStatic') is-invalid @enderror" name="ngrokStatic" type="text" id="ngrokStatic" placeholder="ngrok static domain" value="{{ old('ngrokStatic', $settings['ngrok_static']) }}" required autofocus>
+                <input class="input100 @error('ngrokStatic') is-invalid @enderror" name="ngrokStatic" type="text" id="ngrokStatic" placeholder="ngrok static domain" value="{{ old('ngrokStatic', $settings['ngrok_static'] ?? '') }}" required autofocus>
             </div>
             <div class="container-contact100-form-btn">
                 <div class="wrap-contact100-form-btn">
