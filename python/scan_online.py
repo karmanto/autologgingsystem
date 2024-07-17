@@ -28,6 +28,7 @@ def get_online_status():
 def get_ifconfig_output():
     try:
         ifconfig_output = subprocess.check_output("ifconfig", shell=True, text=True)
+        print(ifconfig_output)
         return ifconfig_output
     except Exception as e:
         print(f"Error getting ifconfig output: {e}")
