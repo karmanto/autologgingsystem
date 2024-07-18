@@ -62,7 +62,7 @@
     $(document).ready(function() {
         var currentHostname = window.location.hostname;
 
-        if (currentHostname === 'autologger.local') {
+        if (currentHostname === 'autologger.local' || currentHostname === '10.3.141.1') {
             setInterval(loadMonitorData, 1000);
         } else {
             setInterval(loadMonitorData, 10000);
