@@ -18,8 +18,8 @@ while true; do
         SSID=$(sed -n '1p' "$WIFI_FLAG_FILE")
         PSK=$(sed -n '2p' "$WIFI_FLAG_FILE")
 
-        sed -i "s/^\s*ssid=.*/    ssid=\"$SSID\"/" "$WPA_SUPPLICANT_CONF"
-        sed -i "s/^\s*psk=.*/    psk=\"$PSK\"/" "$WPA_SUPPLICANT_CONF"
+        sudo sed -i "s/^\s*ssid=.*/    ssid=\"$SSID\"/" "$WPA_SUPPLICANT_CONF"
+        sudo sed -i "s/^\s*psk=.*/    psk=\"$PSK\"/" "$WPA_SUPPLICANT_CONF"
 
         rm "$WIFI_FLAG_FILE"
 
