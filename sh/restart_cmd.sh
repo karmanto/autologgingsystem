@@ -23,7 +23,7 @@ while true; do
 
         rm "$WIFI_FLAG_FILE"
 
-        sudo reboot
+        sudo ifdown wlan0 && sleep 2 && sudo ifup wlan0
     fi
 
     sleep 2
