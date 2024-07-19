@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 NGROK_FILE="../storage/app/ngrok_static.txt"
 WIFI_FLAG_FILE="../storage/app/wifi_client_flag.txt"
@@ -18,8 +18,14 @@ while true; do
         SSID=$(sed -n '1p' "$WIFI_FLAG_FILE")
         PSK=$(sed -n '2p' "$WIFI_FLAG_FILE")
 
-        sudo sed -i "s/^\s*ssid=.*/    ssid=\"$SSID\"/" "$WPA_SUPPLICANT_CONF"
-        sudo sed -i "s/^\s*psk=.*/    psk=\"$PSK\"/" "$WPA_SUPPLICANT_CONF"
+        sudo sed -i "/^\s*ssid=/s/.*/    ssid=\"$SSID\"/" "$WPA_SUPPLICANT_CONF"
+        if [ -z "$PSK" ]; then
+            sudo sed -i "/^\s*psk=/d" "$WPA_SUPPLICANT_CONF"
+            sudo sed -i "/^\s*ssid=\"$SSID\"/a\    key_mgmt=NONE" "$WPA_SUPPLICANT_CONF"
+        else
+            sudo sed -i "/^\s*key_mgmt=NONE/d" "$WPA_SUPPLICANT_CONF"
+            sudo sed -i "/^\s*psk=/s/.*/    psk=\"$PSK\"/" "$WPA_SUPPLICANT_CONF"
+        fi
 
         rm "$WIFI_FLAG_FILE"
 
