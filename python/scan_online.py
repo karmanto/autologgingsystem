@@ -59,14 +59,31 @@ def update_json():
     except Exception as e:
         print(f"Error updating json: {e}")
 
-while True:
-    time.sleep(.5)
-    #if ONLINE_STATUS:
-        #config.RPI_OUTPUT_ARRAY[1].value = not config.RPI_OUTPUT_ARRAY[1].value
-    #else:
-        #config.RPI_OUTPUT_ARRAY[1].value = True
+def first_update_json():
+    try:
+        data = {
+            "online_status": "",
+            "ifconfig": ""
+        }
+        with open(FILE_PATH, 'w') as monitor_file:
+            json.dump(data, monitor_file, indent=4)
 
-    CURR_TIME = int(time.time())
-    if CURR_TIME - PREV_TIME > INTERVAL:
-        PREV_TIME = CURR_TIME
-        update_json()
+    except Exception as e:
+        print(f"Error updating json: {e}")
+
+first_update_json()
+
+while True:
+    # time.sleep(.5)
+    # if ONLINE_STATUS:
+    #     config.RPI_OUTPUT_ARRAY[1].value = not config.RPI_OUTPUT_ARRAY[1].value
+    # else:
+    #     config.RPI_OUTPUT_ARRAY[1].value = True
+
+    # CURR_TIME = int(time.time())
+    # if CURR_TIME - PREV_TIME > INTERVAL:
+    #     PREV_TIME = CURR_TIME
+    #     update_json()
+
+    time.sleep(INTERVAL)
+    update_json()
