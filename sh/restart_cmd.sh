@@ -19,7 +19,7 @@ while true; do
         PSK=$(sed -n '2p' "$WIFI_FLAG_FILE")
 
         sudo sed -i "/^\s*ssid=/s/.*/    ssid=\"$SSID\"/" "$WPA_SUPPLICANT_CONF"
-        if [ -z "$PSK" ]; then
+        if [ $PSK ]; then
             sudo sed -i "/^\s*psk=/d" "$WPA_SUPPLICANT_CONF"
             sudo sed -i "/^\s*ssid=\"$SSID\"/a\    key_mgmt=NONE" "$WPA_SUPPLICANT_CONF"
         else
