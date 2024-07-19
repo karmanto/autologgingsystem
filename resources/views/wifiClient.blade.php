@@ -24,7 +24,7 @@
             </div>
             <div class="wrap-input100 validate-input" data-validate="Tidak boleh kosong">
                 <span class="label-input100">Password</span>
-                <input class="input100 @error('psk') is-invalid @enderror" name="psk" type="text" id="psk" placeholder="password" value="{{ old('psk', $settings['wifi_client']['psk']) }}" min="8" max="63" required>
+                <input class="input100 @error('psk') is-invalid @enderror" name="psk" type="text" id="psk" placeholder="password" value="{{ old('psk', $settings['wifi_client']['psk']) }}" min="8" max="63">
             </div>
             <div class="container-contact100-form-btn">
                 <div class="wrap-contact100-form-btn">
