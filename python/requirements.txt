@@ -3,3 +3,5 @@ adafruit-circuitpython-mcp230xx
 mysqlclient
 python-dotenv
 RPi.GPIO
+python-telegram-bot
+python-telegram-bot[job-queue]
