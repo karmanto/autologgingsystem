@@ -27,6 +27,7 @@ RPI_INPUT_ARRAY = [digitalio.DigitalInOut(pin) for pin in _RPI_PIN_ARRAY]
 JSON_PATH = "../storage/app/monitor.json"
 INFO_JSON_PATH = "../storage/app/info.json"
 SETTINGS_JSON_PATH = "../storage/app/settings.json"
+USER_JSON_PATH = '../storage/app/user_notifications.json'
 
 def get_db_connection():
     try:
