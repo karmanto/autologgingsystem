@@ -37,7 +37,6 @@ def start(update: Update, context: CallbackContext) -> None:
 def notify(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
     data = read_json(USER_JSON_PATH)
-    settings_data = read_json(SETTINGS_JSON_PATH)
 
     if not data:
         data = {"user_notifications": []}
@@ -82,7 +81,7 @@ def monitor_changes():
     name_dict = {item['field']: item['fullname'] for item in settings_data.get('name_list', [])}
 
     while True:
-        time.sleep(1)
+        time.sleep(5)
         current_data = read_json(MONITOR_JSON_PATH)
 
         for show_item in show_list:
