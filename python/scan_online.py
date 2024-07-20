@@ -53,11 +53,25 @@ def update_json():
             "online_status": "",
             "ifconfig": ""
         }
-        with open(FILE_PATH, 'w') as monitor_file:
-            json.dump(data, monitor_file, indent=4)
+        with open(FILE_PATH, 'w') as json_file:
+            json.dump(data, json_file, indent=4)
 
     except Exception as e:
         print(f"Error updating json: {e}")
+
+def first_update_json():
+    try:
+        data = {
+            "online_status": "",
+            "ifconfig": ""
+        }
+        with open(FILE_PATH, 'w') as json_file:
+            json.dump(data, json_file, indent=4)
+
+    except Exception as e:
+        print(f"Error updating json: {e}")
+
+first_update_json()
 
 while True:
     time.sleep(.5)
