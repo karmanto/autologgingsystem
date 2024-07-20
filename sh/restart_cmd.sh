@@ -15,10 +15,9 @@ while true; do
     fi
 
     if [ -s "$WPA_SUPPLICANT_SOURCE" ]; then
-        rm "$WIFI_FLAG_FILE"
-
         sudo cp "$WPA_SUPPLICANT_SOURCE" "$WPA_SUPPLICANT_DEST"
-        sudo ifdown wlan0 && sleep 2 && sudo ifup wlan0
+        rm "$WPA_SUPPLICANT_SOURCE"
+        sudo reboot
     fi
 
     sleep 2
